@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>The art of scraping</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/solarized.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+          <h1>The art of scraping</h1>
+          <br>
+          <h3>Diego Kuperman</h3>
+          <h3>diegok | @freekey</h3>
+				</section>
+
+				<section>
+          <h1>Why I'm talking about this topic?</h1>
+				</section>
+
+				<section>
+          <h1>I do scrap for fun!</h1>
+				</section>
+
+				<section>
+          <h1>...and for profit!</h1>
+          <h3>(for +15 years)</h3>
+				</section>
+
+				<section>
+          <img src="img/soysuper_logo.png" class="plain">
+				</section>
+
+				<section>
+          <h1>[Supermarket]</h1>
+          <img src="img/supers.png">
+				</section>
+
+				<section>
+          <h1>I love the web!</h1>
+          <h3>(most of it)</h3>
+				</section>
+
+				<section>
+					<h2>Doing it...</h2>
+					<h1>And scraping it!</h1>
+          <h4>(kind of reverse engineering fun game)</h4>
+				</section>
+
+				<section>
+					<h1>So, what is this scrap thing!?</h1>
+					<h3>What do I need to know to have that fun!?</h3>
+				</section>
+
+				<section>
+          <p>Web scraping (web harvesting or web data extraction) is a computer software technique of extracting information from websites. Usually, such software programs simulate human exploration of the World Wide Web by either implementing low-level Hypertext Transfer Protocol (HTTP), or embedding a fully-fledged web browser, such as Internet Explorer or Mozilla Firefox.</p>
+				</section>
+				<section>
+          <p>Web scraping (web harvesting or web data extraction) is a computer software technique of <span style="color:red;">extracting information from websites</span>. Usually, such software programs <span style="color:red;">simulate human exploration</span> of the World Wide Web by either implementing low-level Hypertext Transfer Protocol (<span style="color:red;">HTTP</span>), or embedding a fully-fledged <span style="color:red;">web browser</span>, such as Internet Explorer or Mozilla Firefox.</p>
+				</section>
+
+				<section>
+        <p>Web scraping is closely related to web indexing, which indexes information on the web using a bot or web crawler and is a universal technique adopted by most search engines. In contrast, web scraping focuses more on the transformation of unstructured data on the web, typically in HTML format, into structured data that can be stored and analyzed in a central local database or spreadsheet. Web scraping is also related to web automation, which simulates human browsing using computer software. Uses of web scraping include online price comparison, contact scraping, weather data monitoring, website change detection, research, web mashup and web data integration.</p>
+				</section>
+				<section>
+        <p>Web scraping is closely related to web indexing, which indexes information on the web <span style="color:red;">using a bot or web crawler</span> and is a universal technique adopted by most search engines. In contrast, web scraping focuses more on the <span style="color:red;">transformation of unstructured data</span> on the web, typically <span style="color:red;">in HTML</span> format, <span style="color:red;">into structured data</span> that can be stored and analyzed in a central local database or spreadsheet. Web scraping is also related to <span style="color:red;">web automation</span>, which <span style="color:red;">simulates human browsing using computer software</span>. Uses of web scraping include online price comparison, contact scraping, weather data monitoring, website change detection, research, web mashup and web data integration.</p>
+				</section>
+
+				<section>
+          <H1>Art?</H1>
+				</section>
+
+				<section>
+          <H1>Art</H1>
+          <br>
+          <ul>
+            <li>Skill acquired by experience, study, or observation</li>
+            <li>An occupation requiring knowledge or skill</li>
+          </ul>
+          <br> <br> <br>
+          <p>http://www.merriam-webster.com/dictionary/art</p>
+				</section>
+
+
+				<section>
+          <h2>What do we need to know to have fun with this scrap thing?</h2>
+          <ul>
+            <li>HTTP</li>
+            <li>Simulate human exploration</li>
+            <li>Extract information from websites</li>
+            <li>Using a bot or web crawler</li>
+            <li>Transformation of unestructured data</li>
+            <li>...</li>
+          </ul>
+				</section>
+
+				<section>
+          <h2>What do we need to know to have fun with this scrap thing?</h2>
+          <ul>
+            <li>HTTP protocol</li>
+            <li>How browsers work</li>
+            <li>How do I write a web crawler</li>
+            <li>How do I extract data from HTML (from any response type)</li>
+            <li>How do web apps internals work</li>
+          </ul>
+				</section>
+
+				<section>
+          <h1>TOC</h1>
+          <ul>
+            <li>HTTP protocol</li>
+            <li>Browser basic functionality</li>
+            <li>Tools to inspect browsing</li>
+            <li>UserAgent libs</li>
+            <li>DOM parsing libs</li>
+            <li>Use it all together</li>
+            <li>Tricks to bypass some restrictions</li>
+          </ul>
+				</section>
+
+				<section>
+          <h1>HTTP</h1>
+          <h3>0.9 (1991, informal, test drive the www)</h3>
+          <h3>1.0 (1996, first RFC about ^)</h3>
+          <h3>1.1 (RFC'd in 1997-1999, What we use today)</h3>
+				</section>
+
+				<section>
+          <h1>Do you speak HTTP?</h1>
+				</section>
+
+				<section>
+<pre><code>$ telnet act.yapc.eu 80
+...</code></pre>
+
+<p>Request</p>
+<pre><code>GET /ye2015/ HTTP/1.1
+Host: act.yapc.eu
+
+</code></pre>
+
+<p>Response</p>
+<pre><code>HTTP/1.1 200 OK
+Server: Apache/1.3.42 (Unix) mod_perl/1.31
+Set-Cookie: act=language&en; path=/; expires=Thu, 25-Feb-2016 16:28:37 GMT
+Content-Type: text/html; charset=UTF-8
+X-Cache: MISS from act.yapc.eu
+Transfer-Encoding: chunked
+Date: Sat, 29 Aug 2015 16:28:38 GMT
+X-Varnish: 401396155
+Age: 0
+Via: 1.1 varnish
+Connection: keep-alive
+
+004616
+&lt;!DOCTYPE html&gt;
+...</code></pre>
+				</section>
+
+				<section>
+        <h2>Request headers</h2>
+<pre><code>Host:soysuper.com
+User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5)... (snip)
+Accept:text/html,application/xhtml+xml,appli... (snip)
+Accept-Encoding:gzip,deflate,sdch
+Accept-Language:en-US,en;q=0.8,es;q=0.6,ca;q=0.4
+Connection:keep-alive
+Cookie: soysuper=eyJ3aCI... (snip)
+</code></pre>
+
+        <h2>Response headers</h2>
+<pre><code>Connection:keep-alive
+Content-Encoding:gzip
+Content-Type:text/html;charset=UTF-8
+Date:Fri, 07 Nov 2014 10:25:30 GMT
+Keep-Alive:timeout=10
+Server:nginx/1.2.3
+Set-Cookie:soysuper=eyJ6aX... (snip)
+Transfer-Encoding:chunked
+Vary:Accept-Encoding
+X-hostname:app3.ss
+</code></pre>
+				</section>
+
+				<section>
+        <h1>The browser speaks HTTP for you</h1>
+        </section>
+
+				<section>
+          <h1>Browser 101</h1>
+          <ul>
+            <li>DNS resolution</li>
+            <li>Request building and send</li>
+            <li>Response parsing and render</li>
+            <li>Cookie jar</li>
+            <li>Cache</li>
+            <li>...</li>
+          </ul>
+        </section>
+
+				<section>
+          <h1>Browser as a dev tool</h1>
+          <ul>
+            <li>DOM inspector</li>
+            <li>Network activity</li>
+            <li>Request cycle inspection</li>
+            <li>Request manipulation</li>
+          </ul>
+        </section>
+
+				<section>
+          <h1>Network activity</h1>
+          <img src="img/network-panel.png">
+        </section>
+
+				<section>
+          <h1>Request cycle inspector</h1>
+          <img src="img/req-inspect.png">
+        </section>
+
+				<section>
+          <h1>Request cycle inspector</h1>
+          <img src="img/req-cookie.png">
+        </section>
+
+				<section>
+          <h1>Request manipulation</h1>
+          <h2>Firefox Tamper Data Addon</h2>
+        </section>
+
+				<section>
+          <h1>User Agents for perl</h1>
+          <ul>
+            <li>Control full browser</li>
+            <li>Native perl UAs</li>
+          </ul>
+        </section>
+
+				<section>
+          <h1>Remote full browser</h1>
+          <ul>
+            <li>WWW::Selenium</li>
+            <li>WWW::Mechanize::PhantomJS</li>
+            <li>WWW::Mechanize::Firefox (mozrepl)</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Selenium web driver</h2>
+          <pre><code data-trim contenteditable class="perl">
+use WWW::Selenium;
+
+my $sel = WWW::Selenium->new(
+  host        => "localhost",
+  port        => 4444,
+  browser     => "*iexplore",
+  browser_url => "http://www.google.com",
+);
+
+$sel->start;
+$sel->open("http://www.google.com");
+$sel->type("q", "hello world");
+$sel->click("btnG");
+$sel->wait_for_page_to_load(5000);
+print $sel->get_title;
+$sel->stop;
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Screen capture</h2>
+          <pre><code data-trim contenteditable class="perl">
+use WWW::Mechanize::PhantomJS;
+
+my $mech = WWW::Mechanize::PhantomJS->new();
+$mech->get('http://google.com');
+
+$mech->eval_in_page('alert("Hello PhantomJS")');
+my $png= $mech->content_as_png();
+
+          </code></pre>
+        </section>
+
+				<section>
+          <h1>Native UA's</h1>
+          <ul>
+            <li>LWP::UserAgent (libwww)</li>
+            <li>WWW::Mechanize</li>
+            <li>AnyEvent::HTTP</li>
+            <li>Web::Query</li>
+            <li>Mojo::UserAgent</li>
+            <li>...</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Perl core</h2>
+          <pre><code data-trim contenteditable class="perl">
+require LWP::UserAgent;
+
+my $ua = LWP::UserAgent->new;
+
+my $response = $ua->get('http://search.cpan.org/');
+
+$response->is_success
+  ? say $response->decoded_content  # or whatever
+  : die $response->status_line;
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Mech browser</h2>
+          <pre><code data-trim contenteditable class="perl">
+use v5.10;
+use WWW::Mechanize::Cached;
+
+my $mech = WWW::Mechanize::Cached->new();
+
+$mech->get('https://metacpan.org/');
+$mech->submit_form(
+    form_number => 1,
+    fields      => { q => 'diegok', },
+);
+
+$mech->follow_link( text_regex => qr/WWW::EZTV/ );
+say $mech->content;
+          </code></pre>
+        </section>
+
+        <section>
+          <h1>Mojo::UserAgent</h1>
+          <h2>Part of Mojolicious</h2>
+          <h2>Async suport by default</h2>
+          <h2>Websockets support</h2>
+				</section>
+
+        <section>
+          <h2>Mojo::UserAgent simple example</h2>
+          <pre><code data-trim contenteditable class="perl">
+use Mojo::UserAgent;
+use v5.10;
+
+my $ua = Mojo::UserAgent->new;
+
+say $ua->get('blogs.perl.org')->res->body;
+          </code></pre>
+          <p>(More on this later)</p>
+        </section>
+
+        <section>
+          <h1>DOM parsing and data extraction</h1>
+          <ul>
+            <li>HTML::Parser</li>
+            <li>HTML::TreeBuilder</li>
+            <li>HTML::TreeBuilder::XPath</li>
+            <li>HTML::Selector::XPath::Simple</li>
+            <li>JSON</li>
+            <li>...</li>
+            <li><span style="color:red;">Mojo::DOM & Mojo::CSS</span></li>
+          </ul>
+				</section>
+
+        <section>
+          <h2>Mojo::UserAgent data extraction (still simple)</h2>
+          <pre><code data-trim contenteditable class="perl">
+use Mojo::UserAgent;
+use v5.10;
+
+my $ua = Mojo::UserAgent->new;
+
+# Scrape the latest headlines from a news site with CSS selectors
+say $ua->get('blogs.perl.org')
+       ->res->dom->find('h2 > a')
+       ->map('text')->join("\n");
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>JSON response</h2>
+          <pre><code data-trim contenteditable class="perl">
+use v5.10;
+use Mojo::UserAgent;
+use Mojo::URL;
+
+my $ua = Mojo::UserAgent->new;
+my $api_url = Mojo::URL->new('http://api.metacpan.org/v0/release/_search');
+
+my $res = $ua->get( $api_url->clone->query(q => 'author:DIEGOK') )->res;
+
+say $res->json->{hits}{hits}[1]{_source}{archive};
+
+# Mojo::JSON::Pointer (rfc6901)
+say $res->json('/hits/hits/1/_source/archive');
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Post</h2>
+          <pre><code data-trim contenteditable class="perl">
+use v5.10;
+use Mojo::UserAgent;
+
+my $ua = Mojo::UserAgent->new;
+$ua->max_redirects(1);
+
+my $tx = $ua->post( 'http://domain.com/login', form => {
+    user => 'diegok',
+    pass => 's3cr3t' 
+});
+
+my $tx = $ua->post( 'http://domain.com/search', json => {
+    query => 'something',
+    page  => 3
+});
+          </code></pre>
+        </section>
+
+        <section>
+          <h1>Putting it all together</h1>
+				</section>
+
+				<section data-background="red">
+          <h1>WARNING</h1>
+          <h2>Scraping can become adictive</h2>
+				</section>
+
+        <section>
+          <h2>Login (Post form)</h2>
+          <pre><code data-trim contenteditable class="perl">
+use v5.10;
+use Mojo::UserAgent;
+use Mojo::URL;
+use Data::Dump qw(pp);
+
+my $ua = Mojo::UserAgent->new;
+$ua->max_redirects(1);
+
+my $base = Mojo::URL->new('http://act.yapc.eu/');
+my $home_url  = $base->clone->path('/ye2015/main');
+my $login_url = $base->clone->path('/ye2015/LOGIN');
+
+my $dom = $ua->post( $login_url, form => {
+    credential_0 => 'diegok',
+    credential_1 => 'mypass',
+    destination  => '/ye2015/main' # hidden
+})->res->dom;
+
+die "Login error!"
+    unless $dom->at('.navbar-right a > .hidden-md')->all_text =~ /diegok/;
+
+# Now we're logged in!, this is why:
+say pp($ua->cookie_jar);
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Building a crawler</h2>
+          <pre><code data-trim contenteditable class="perl">
+package MyCrawler;
+use Mojo::Base -base;
+use Mojo::UserAgent;
+use Mojo::URL;
+use Time::HiRes qw( gettimeofday tv_interval );
+
+has ua => sub {
+    my $self = shift;
+
+    my $ua = Mojo::UserAgent->new;
+    $ua->transactor->name('My Crawler 1.0');
+    $ua->max_redirects(3);
+
+    $ua->on( start => sub {
+        my ( $ua, $tx ) = @_;
+        my @time = gettimeofday();
+
+        $tx->on( finish => sub {
+            my $tx = shift;
+            say STDERR sprintf("%s [%s] %s (%.2f)",
+                $tx->req->method, $tx->res->code || 'ERR',
+                $tx->req->url, tv_interval(\@time)
+            );
+        });
+    });
+    return $ua;
+};
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Fill-in forms helper</h2>
+          <pre><code data-trim contenteditable class="perl">
+sub submit_form {
+    my ( $self, $tx, $selector, $values ) = @_;
+
+    if ( my $form = $tx->res->dom->at($selector) ) {
+        my $url = Mojo::URL->new($form->attr('action'))->to_abs($tx->req->url);
+
+        my $method = $form->attr('method') || 'get';
+        my $header = { Referer => $tx->req->url.'' };
+
+        if ( $method eq 'post' ) {
+            return $self->ua->post( $url, $referer,
+                form => $self->build_params( $form, $values )
+            );
+        }
+        else {
+            return $self->ua->get( $url, $referer,
+                form => $self->build_params( $form, $values )
+            );
+        }
+    }
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Fill-in forms helper</h2>
+          <pre><code data-trim contenteditable class="perl">
+sub build_params_for_submit {
+    my ($self, $form, $fill) = ( shift, shift, shift||{} );
+
+    my $values = {};
+    $form->find('input')->each(sub {
+      if ( my $name = $_[0]->attr('name') ) {
+        my $type = $_[0]->attr('type') || 'text';
+        return if $type =~ /radio|checkbox/
+               && not exists $_[0]->attr->{checked};
+
+        if ( exists $values->{ $name } ) {
+          if ( ref $values->{ $name } ) {
+            push @{$values->{ $name }}, $_[0]->attr('value');
+          }
+          else {
+            $values->{$name} = [ $values->{$name}, $_[0]->attr('value') ];
+          }
+        }
+        else {
+          $values->{ $name } = $_[0]->attr('value');
+        }
+      }
+    });
+
+    $values->{$_} = $fill->{$_} for keys %$fill;
+    $values;
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Scrap this YAPC!</h2>
+          <pre><code data-trim contenteditable class="perl">
+package ACT::YE2015;
+use Mojo::Base 'MyCrawler';
+use Mojo::URL;
+
+has user     => sub { die 'Need username' };
+has password => sub { die 'Need password' };
+has base_url => sub { Mojo::URL->new('http://act.yapc.eu') };
+
+sub _url { shift->base_url->clone->path('/ye2015/'. shift) }
+
+sub login {
+  my $self = shift;
+
+  my $tx = $self->get( $self->_url('main') );
+  die "Can't get login page" unless $tx->success;
+
+  my $dom = $self->post_form( 'form' => {
+    credential_0 => $self->user,
+    credential_1 => $self->password,
+  })->res->dom;
+
+  die "Login error!"
+      unless $dom->at('.navbar-right a > .hidden-md')->all_text
+          eq $self->user;
+
+  $self;
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Scrap this YAPC!</h2>
+          <pre><code data-trim contenteditable class="perl">
+sub committed_users {
+  my $self = shift;
+
+  my $tx = $self->get( $self->_url('stats') );
+  die "Can't get stats page" unless $tx->success;
+
+  my $stats = $tx->res->dom->find('.main-content p')->[0]->text;
+
+  if ( $stats =~ /(\d+) committed users/ ) {
+    return $1;
+  }
+
+  die "Can't find stats info.";
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Scrap this YAPC!</h2>
+          <pre><code data-trim contenteditable class="perl">
+use ACT::YE2015;
+use v5.10;
+
+my $crawler = ACT::YE2015->new(
+    user     => 'diegok',
+    password => 's3cre3t'
+);
+
+say $crawler->login->committed_users; # 262
+          </code></pre>
+        </section>
+
+        <section>
+          <h1>Troubleshoting guide</h1>
+          <h2>How to bypass some restrictions</h2>
+				</section>
+
+        <section>
+          <h1>Golden rules</h1>
+          <ul>
+            <li>If your browser can do it...</li>
+            <li>Look every header/cookie (I really mean every one)</li>
+            <li>Use tamper data to simulate your crawler</li>
+            <li>Dump headers on your crawler and compare</li>
+          </ul>
+				</section>
+
+        <section>
+          <h1>Browser sniffing</h1>
+				</section>
+        <section>
+          <ul>
+            <li>Change user-agent</li>
+            <li>^ Simulate google bot</li>
+            <li>Ensure header order and spacing</li>
+            <li>Use real browser</li>
+          </ul>
+				</section>
+
+        <section>
+          <h1>IP banning</h1>
+				</section>
+        <section>
+          <ul>
+            <li>TOR</h2>
+            <li>Open or paid proxies</li>
+            <li>Get IP block + iptables</li>
+            <li>Amazon EC2</li>
+          </ul>
+				</section>
+
+        <section>
+          <h1>Javascript puzzle</h1>
+				</section>
+        <section>
+          <ul>
+            <li>Parse code and simulate</li>
+            <li>Use real browser</li>
+            <li>Use real browser and copy cookie-jar</li>
+          </ul>
+				</section>
+
+        <section>
+          <h2>Use real browser and copy cookie-jar</h2>
+          <pre><code data-trim contenteditable class="javascript">
+var page = require('webpage').create();
+
+page.settings.resourceTimeout = 10000; // 10 secs
+page.settings.userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36';
+
+page.open('https://soysuper.com', function(status) {
+    if (status !== "success") {
+        console.log("Request failed with status: " + status);
+        phantom.exit();
+    }
+    else {
+      get_cookies(page);
+    }
+});
+
+function get_cookies(page) {
+  if ( page.cookies.length ) {
+    console.log( JSON.stringify( page.cookies ) );
+    phantom.exit();
+  }
+  else {
+    setInterval(function() { get_cookies(page) }, 5);
+  }
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Use real browser and copy cookie-jar</h2>
+          <pre><code data-trim contenteditable class="perl">
+use v5.10;
+use Mojo::UserAgent;
+use Mojo::JSON  qw(decode_json);
+use File::Which qw(which);
+
+my $phantomjs_bin = which('phantomjs') || die "Can't find phantomjs binary";
+my $ua            = Mojo::UserAgent->new;
+
+my $cookies = decode_json(`$phantomjs_bin cookies.js`);
+for my $cookie ( @$cookies ) {
+    $ua->cookie_jar->add(
+        Mojo::Cookie::Response->new(
+            expires => $_->{expiry},
+            map { $_ => $cookie->{$_} }
+             qw ( name value domain path secure httponly ),
+        )
+    );
+}
+
+say $_->name for @{$ua->cookie_jar->all};
+          </code></pre>
+        </section>
+
+        <section>
+          <h1>Captcha</h1>
+				</section>
+        <section>
+          <ul>
+            <li>P0rn</li>
+            <li>MTurk</li>
+            <li>Look for bugs</li>
+          </ul>
+				</section>
+
+        <section>
+          <h1>...</h1>
+				</section>
+
+				<section data-background="white">
+          <h1>Thank you!</h1>
+				</section>
+
+        <section>
+          <h1>Any question?</h1>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: false,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'fade', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				//parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				//parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
