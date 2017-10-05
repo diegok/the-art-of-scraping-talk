@@ -59,7 +59,7 @@
 
 				<section>
           <h1>...and for profit!</h1>
-          <h3>(for +15 years)</h3>
+          <h3>(for +18 years)</h3>
 				</section>
 
 				<section>
@@ -159,36 +159,47 @@
           <h3>1.0 (1996, first RFC about ^)</h3>
           <h3>1.1 (RFC'd in 1997-1999, What we use today)</h3>
 				</section>
+				<section>
+          <h1>HTTP</h1>
+          <h3>0.9 (1991, informal, test drive the www)</h3>
+          <h3>1.0 (1996, first RFC about ^)</h3>
+          <h3>1.1 (RFC'd in 1997-1999, What we use today)</h3>
+          <h3>2.0 (RFC'd in 2015, What google use today)</h3>
+				</section>
 
 				<section>
           <h1>Do you speak HTTP?</h1>
 				</section>
 
 				<section>
-<pre><code>$ telnet act.yapc.eu 80
-...</code></pre>
+<pre><code>$ telnet www.barcelonactiva.cat 80
+...
+</code></pre>
+				</section>
+				<section>
+<pre><code>$ telnet www.barcelonactiva.cat 80
+Trying 94.229.206.233...
+Connected to www.barcelonactiva.cat.
+Escape character is '^]'.</code></pre>
 
 <p>Request</p>
-<pre><code>GET /ye2015/ HTTP/1.1
-Host: act.yapc.eu
+<pre><code>GET /barcelonactiva/cat/ HTTP/1.1
+Host: www.barcelonactiva.cat
 
 </code></pre>
 
 <p>Response</p>
 <pre><code>HTTP/1.1 200 OK
-Server: Apache/1.3.42 (Unix) mod_perl/1.31
-Set-Cookie: act=language&en; path=/; expires=Thu, 25-Feb-2016 16:28:37 GMT
-Content-Type: text/html; charset=UTF-8
-X-Cache: MISS from act.yapc.eu
+Server: Apache-Coyote/1.1
+Set-Cookie: JSESSIONID=66E2A3F715112E044A7B7F7B9E1E12A2; Path=/barcelonactiva
+Content-Type: text/html;charset=ISO-8859-1
 Transfer-Encoding: chunked
-Date: Sat, 29 Aug 2015 16:28:38 GMT
-X-Varnish: 401396155
-Age: 0
-Via: 1.1 varnish
-Connection: keep-alive
+Date: Wed, 04 Oct 2017 19:50:45 GMT
+Set-Cookie: BIGipServerDMZ_HTTP233=rd2o00000000000000000000ffffac1002bdo8080; path=/
 
-004616
-&lt;!DOCTYPE html&gt;
+2000
+
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;
 ...</code></pre>
 				</section>
 
@@ -227,6 +238,7 @@ X-hostname:app3.ss
             <li>DNS resolution</li>
             <li>Request building and send</li>
             <li>Response parsing and render</li>
+            <li>Javascript runtime + API</li>
             <li>Cookie jar</li>
             <li>Cache</li>
             <li>...</li>
@@ -264,7 +276,7 @@ X-hostname:app3.ss
         </section>
 
 				<section>
-          <h1>User Agents for perl</h1>
+          <h1>User Agents libs</h1>
           <ul>
             <li>Control full browser</li>
             <li>Native perl UAs</li>
@@ -274,9 +286,11 @@ X-hostname:app3.ss
 				<section>
           <h1>Remote full browser</h1>
           <ul>
-            <li>WWW::Selenium</li>
-            <li>WWW::Mechanize::PhantomJS</li>
-            <li>WWW::Mechanize::Firefox (mozrepl)</li>
+            <li>Selenium webdriver</li>
+            <li>PhantomJS</li>
+            <li>Firefox (mozrepl)</li>
+            <li>Chrome headless</li>
+            <li>...</li>
           </ul>
         </section>
 
@@ -319,11 +333,13 @@ my $png= $mech->content_as_png();
 				<section>
           <h1>Native UA's</h1>
           <ul>
-            <li>LWP::UserAgent (libwww)</li>
-            <li>WWW::Mechanize</li>
-            <li>AnyEvent::HTTP</li>
-            <li>Web::Query</li>
-            <li>Mojo::UserAgent</li>
+            <li>LWP::UserAgent (perl core)</li>
+            <li>http (nodejs core)</li>
+            <li>requests (python)</li>
+            <li>axios (nodejs)</li>
+            <li>WWW::Mechanize (perl)</li>
+            <li>mechanize (ruby)</li>
+            <li>Mojo::UserAgent (perl)</li>
             <li>...</li>
           </ul>
         </section>
@@ -331,7 +347,7 @@ my $png= $mech->content_as_png();
         <section>
           <h2>Perl core</h2>
           <pre><code data-trim contenteditable class="perl">
-require LWP::UserAgent;
+use LWP::UserAgent;
 
 my $ua = LWP::UserAgent->new;
 
@@ -344,7 +360,36 @@ $response->is_success
         </section>
 
         <section>
-          <h2>Mech browser</h2>
+          <h2>requests (python)</h2>
+          <pre><code data-trim contenteditable class="python">
+import requests
+
+r = requests.get('https://soysuper.com')
+
+if r.ok:
+    print(r.text)
+else:
+    print(r.status_code)
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>axios (nodejs)</h2>
+          <pre><code data-trim contenteditable class="javascript">
+const axios = require('axios');
+
+axios.get('https://tripuniq.com')
+  .then(response => {
+    console.log(response.data);
+  })
+  .catch(error => {
+    console.log(error);
+  });
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Mechanize (perl) </h2>
           <pre><code data-trim contenteditable class="perl">
 use v5.10;
 use WWW::Mechanize::Cached;
@@ -363,11 +408,45 @@ say $mech->content;
         </section>
 
         <section>
+          <h2>mechanize (ruby)</h2>
+          <pre><code data-trim contenteditable class="ruby">
+require 'rubygems'
+require 'mechanize'
+
+a = Mechanize.new { |agent|
+  agent.user_agent_alias = 'Mac Safari'
+}
+
+a.get('http://google.com/') do |page|
+  search_result = page.form_with(:id => 'gbqf') do |search|
+    search.q = 'Hello world'
+  end.submit
+
+  search_result.links.each do |link|
+    puts link.text
+  end
+end
+          </code></pre>
+        </section>
+
+        <section>
           <h1>Mojo::UserAgent</h1>
           <h2>Part of Mojolicious</h2>
           <h2>Async suport by default</h2>
           <h2>Websockets support</h2>
 				</section>
+
+        <section>
+          <h2>Install for perl'ers</h2>
+          <pre><code>
+$ cpanm -n Mojolicious
+          </code></pre>
+
+          <h2>Install for any unix user</h2>
+          <pre><code>
+$ sudo -s 'curl -L cpanmin.us | perl - Mojolicious'
+          </code></pre>
+        </section>
 
         <section>
           <h2>Mojo::UserAgent simple example</h2>
@@ -385,10 +464,12 @@ say $ua->get('blogs.perl.org')->res->body;
         <section>
           <h1>DOM parsing and data extraction</h1>
           <ul>
-            <li>HTML::Parser</li>
-            <li>HTML::TreeBuilder</li>
-            <li>HTML::TreeBuilder::XPath</li>
-            <li>HTML::Selector::XPath::Simple</li>
+            <li>HTML::Parser (perl)</li>
+            <li>HTML::Selector::XPath::Simple (perl)</li>
+            <li>BeautifulSoup (python)</li>
+            <li>Nokogiri (ruby)</li>
+            <li>Nokogiri (ruby)</li>
+            <li>cheerio (nodejs)</li>
             <li>JSON</li>
             <li>...</li>
             <li><span style="color:red;">Mojo::DOM & Mojo::CSS</span></li>
@@ -440,10 +521,10 @@ $ua->max_redirects(1);
 
 my $tx = $ua->post( 'http://domain.com/login', form => {
     user => 'diegok',
-    pass => 's3cr3t' 
+    pass => 's3cr3t'
 });
 
-my $tx = $ua->post( 'http://domain.com/search', json => {
+my $tx = $ua->post( 'http://api.example.io/search', json => {
     query => 'something',
     page  => 3
 });
@@ -462,10 +543,9 @@ my $tx = $ua->post( 'http://domain.com/search', json => {
         <section>
           <h2>Login (Post form)</h2>
           <pre><code data-trim contenteditable class="perl">
-use v5.10;
+use common::sense;
 use Mojo::UserAgent;
 use Mojo::URL;
-use Data::Dump qw(pp);
 
 my $ua = Mojo::UserAgent->new;
 $ua->max_redirects(1);
@@ -484,7 +564,7 @@ die "Login error!"
     unless $dom->at('.navbar-right a > .hidden-md')->all_text =~ /diegok/;
 
 # Now we're logged in!, this is why:
-say pp($ua->cookie_jar);
+say $_->to_string for $ua->cookie_jar->all->@*;
           </code></pre>
         </section>
 
@@ -582,7 +662,7 @@ sub build_params_for_submit {
         </section>
 
         <section>
-          <h2>Scrap this YAPC!</h2>
+          <h2>Let's use our class!</h2>
           <pre><code data-trim contenteditable class="perl">
 package ACT::YE2015;
 use Mojo::Base 'MyCrawler';
@@ -615,7 +695,7 @@ sub login {
         </section>
 
         <section>
-          <h2>Scrap this YAPC!</h2>
+          <h2>Get some data</h2>
           <pre><code data-trim contenteditable class="perl">
 sub committed_users {
   my $self = shift;
@@ -635,7 +715,7 @@ sub committed_users {
         </section>
 
         <section>
-          <h2>Scrap this YAPC!</h2>
+          <h2>Scrap it!</h2>
           <pre><code data-trim contenteditable class="perl">
 use ACT::YE2015;
 use v5.10;
@@ -776,6 +856,10 @@ say $_->name for @{$ua->cookie_jar->all};
 
         <section>
           <h1>Any question?</h1>
+				</section>
+
+        <section data-background="yellow">
+          <h1>Let's play!</h1>
 				</section>
 
 			</div>
